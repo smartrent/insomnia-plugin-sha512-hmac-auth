@@ -6,3 +6,7 @@ Exposes two Template Tags for injecting (1) the current Unixtime and
 ```javascript
 timestamp + "\n" + method + "\n" + path + "\n" + body
 ```
+
+## Installation
+
+Open the Plugins menu in [Insomnia](https://insomnia.rest/) and add `insomnia-plugin-sha512-hmac-auth`.
