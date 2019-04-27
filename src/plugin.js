@@ -37,21 +37,10 @@ module.exports.templateTags = [
       }
 
       const request = await context.util.models.request.getById(context.meta.requestId);
-
-      const vars = context.context;
-      const urlWithoutVariablesApplied = request.url;
-      const urlString = Object
-        .keys(vars)
-        .filter(key => typeof vars[key] == 'string')
-        .reduce(
-          (url, key) => url.replace('{{ ' + key + '  }}', vars[key]),
-          urlWithoutVariablesApplied
-        );
-
       const method = request.method;
-      const url = new URL(urlString);
+      const url = new URL(await context.util.render(request.url));
       const path = url.href.substring(url.origin.length);
-      const body = request.body.text ? request.body.text : "";
+      const body = request.body.text || "";
       const message = timestamp + "\n" + method + "\n" + path + "\n" + body;
       const signature = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA512(message, secret));
 
