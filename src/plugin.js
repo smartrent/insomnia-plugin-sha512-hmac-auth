@@ -1,4 +1,5 @@
 const CryptoJS = require('crypto-js');
+const InsomniaUrl = require('insomnia-url');
 const TIMESTAMP_STORE_KEY = 'current_unixtime';
 
 module.exports.templateTags = [
@@ -40,8 +41,23 @@ module.exports.templateTags = [
       const method = request.method;
       const url = new URL(await context.util.render(request.url));
       const path = url.href.substring(url.origin.length);
+
+      const renderedParameters = await Promise.all(
+        request.parameters.map(async function(param) {
+          const name = await context.util.render(param.name);
+          const value = await context.util.render(param.value);
+
+          param.name = name;
+          param.value = value;
+
+          return param;
+        })
+      );
+
+      const query = InsomniaUrl.buildQueryStringFromParams(renderedParameters);
+      const fullPath = InsomniaUrl.joinUrlAndQueryString(path, query);
       const body = request.body.text || "";
-      const message = timestamp + "\n" + method + "\n" + path + "\n" + body;
+      const message = timestamp + "\n" + method + "\n" + fullPath + "\n" + body;
       const signature = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA512(message, secret));
 
       return signature;
