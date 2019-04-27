@@ -1,5 +1,5 @@
 {
-  "name": "insomnia-plugin-sha512-hmac-auth",
+  "name": "@smartrent/insomnia-plugin-sha512-hmac-auth",
   "version": "1.0.0",
   "description": "",
   "main": "src/plugin.js",
