@@ -38,7 +38,7 @@ module.exports.templateTags = [
       }
 
       const request = await context.util.models.request.getById(context.meta.requestId);
-      const method = request.method;
+      const method = request.method.toLowerCase();
       const url = new URL(await context.util.render(request.url));
       const path = url.href.substring(url.origin.length);
 
