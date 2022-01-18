@@ -9,7 +9,7 @@ timestamp + "\n" + method + "\n" + path + "\n" + body
 
 ## Installation
 
-Open the Plugins menu in [Insomnia](https://insomnia.rest/) and add `insomnia-plugin-sha512-hmac-auth`.
+Open the Plugins menu in [Insomnia](https://insomnia.rest/) and add `@smartrent/insomnia-plugin-sha512-hmac-auth`.
 
 ## Usage
 
